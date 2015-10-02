@@ -720,6 +720,9 @@ static idretaintype(NSMutableArray) _curNotifications;
                 }
                 [UIResponder keyPressed:evt->type];
                 return;
+            } else if ( evt->mouseEvent == wheelChange ) {
+                [UIResponder mouseWheelChange:CGPointMake(evt->x, evt->y)];
+                return;
             }
 
             /*
@@ -2021,6 +2024,20 @@ void UIQueueTouchInput(float x, float y, int fingerID, int eventType, float surf
             AddMouseEvent(&evt);
             break;
     }
+}
+
+void UIQueueMouseWheelInput(float x, float y)
+{
+    EbrInputEvent localEvt;
+    EbrInputEvent *evt = &localEvt;
+
+    memset(evt, 0, sizeof(EbrInputEvent));
+
+    evt->mouseEvent = wheelChange;
+    evt->x = x;
+    evt->y = y;
+
+    AddMouseEvent(evt);
 }
 
 void UIRequestTransactionProcessing()

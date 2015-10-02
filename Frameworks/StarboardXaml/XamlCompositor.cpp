@@ -75,6 +75,7 @@ void SetRootGrid(winobjc::Id& root)
 }
 
 void IWXamlTouch(float x, float y, unsigned int touchID, int event, unsigned __int64 timestampMicro);
+void IWXamlWheelChange(float x, float y);
 void IWXamlKeyInput(int key);
 #define EVENT_DOWN  0x64
 #define EVENT_MOVE  0x65
@@ -150,6 +151,11 @@ public:
     virtual void PointerMoved(float x, float y, unsigned int pointerId, unsigned __int64 timestampMicro)
     {
         IWXamlTouch(x, y, pointerId, EVENT_MOVE, timestampMicro);
+    }
+
+    virtual void PointerWheelChanged(float x, float y, unsigned int pointerId, unsigned __int64 timestampMicro)
+    {
+        IWXamlWheelChange(x, y);
     }
 
     virtual void KeyDown(unsigned int key)

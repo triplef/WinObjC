@@ -19,6 +19,7 @@
 UIKIT_EXPORT void UIRequestTransactionProcessing();
 UIKIT_EXPORT void UIShutdown();
 UIKIT_EXPORT void UIQueueTouchInput(float x, float y, int fingerID, int eventType, float surfaceWidth, float surfaceHeight, int64_t eventTime, bool bLandscape = false);
+UIKIT_EXPORT void UIQueueMouseWheelInput(float x, float y);
 UIKIT_EXPORT void UIQueueKeyInput(int key);
 UIKIT_EXPORT int UIOrientationFromString(int curOrientation, NSString* str);
 UIKIT_EXPORT void UIBecomeInactive();

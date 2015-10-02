@@ -1397,6 +1397,11 @@ void IWXamlTouch(float x, float y, unsigned int touchID, int event, unsigned __i
     UIQueueTouchInput(x, y, touchID, event, screenWidth, screenHeight, timestampMicro * 1000);
 }
 
+void IWXamlWheelChange(float x, float y)
+{
+    UIQueueMouseWheelInput(x, y);
+}
+
 void IWXamlKeyInput(int key)
 {
     UIQueueKeyInput(key);

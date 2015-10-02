@@ -225,6 +225,8 @@ enum EbrInputEventType
     rbuttonDown = 0x08,
     rbuttonUp   = 0x09,
 
+    wheelChange = 0x10,
+
     keyPressed = 0x500
 };
 

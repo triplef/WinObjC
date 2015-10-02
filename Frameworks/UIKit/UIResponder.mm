@@ -86,6 +86,15 @@ static int _changingResponder = 0;
     -(void) keyPressed:(unsigned)key {
     }
 
+    +(void) mouseWheelChange:(CGPoint)delta {
+        if ( _curFirstResponder != nil ) {
+            [_curFirstResponder mouseWheelChange:delta];
+        }
+    }
+
+    -(void) mouseWheelChange:(CGPoint)delta {
+    }
+
     -(UIResponder*) nextResponder {
         return nil;
     }

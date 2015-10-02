@@ -917,6 +917,7 @@ namespace XamlCompositorCS
                 this.PointerReleased += CALayerXaml_PointerReleased;
                 this.PointerMoved += CALayerXaml_PointerMoved;
                 this.PointerCanceled += CALayerXaml_PointerCanceled;
+                this.PointerWheelChanged += CALayerXaml_PointerWheelChanged;
                 this.IsHitTestVisible = true;
             }
 
@@ -956,6 +957,12 @@ namespace XamlCompositorCS
             void CALayerXaml_PointerMoved(object sender, PointerRoutedEventArgs e)
             {
                 CALayerInputHandler.HandleMoveInput(this, e);
+                e.Handled = true;
+            }
+
+            void CALayerXaml_PointerWheelChanged(object sender, PointerRoutedEventArgs e)
+            {
+                CALayerInputHandler.HandleWheelChangeInput(this, e);
                 e.Handled = true;
             }
 
@@ -1499,6 +1506,7 @@ namespace XamlCompositorCS
             void PointerDown(float x, float y, uint id, ulong timestamp);
             void PointerUp(float x, float y, uint id, ulong timestamp);
             void PointerMoved(float x, float y, uint id, ulong timestamp);
+            void PointerWheelChanged(float x, float y, uint id, ulong timestamp);
             void KeyDown(uint key);
         }
 
@@ -1635,6 +1643,16 @@ namespace XamlCompositorCS
                 }
                 Windows.UI.Input.PointerPoint point = e.GetCurrentPoint(rootLayer);
                 InputEventHandler.PointerMoved((float)point.Position.X, (float)point.Position.Y, point.PointerId, point.Timestamp);
+            }
+
+            const int WHEEL_DELTA = 120;
+
+            static internal void HandleWheelChangeInput(CALayerXaml layer, PointerRoutedEventArgs e)
+            {
+                Windows.UI.Input.PointerPoint point = e.GetCurrentPoint(null);
+                Windows.UI.Input.PointerPointProperties properties = point.Properties;
+                float mouseWheelDelta = (float)properties.MouseWheelDelta / WHEEL_DELTA;
+                InputEventHandler.PointerWheelChanged(properties.IsHorizontalMouseWheel ? mouseWheelDelta : 0.0f, properties.IsHorizontalMouseWheel ? 0.0f : mouseWheelDelta, point.PointerId, point.Timestamp);
             }
 
             static public void SetInputHandler(CALayerXamlInputEvents handler)
