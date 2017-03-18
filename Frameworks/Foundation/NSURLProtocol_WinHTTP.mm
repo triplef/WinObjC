@@ -290,6 +290,9 @@ static std::function<R(Args...)> bindObjC(id instance, SEL _cmd) {
 }
 
 - (HRESULT)_asyncHttpOperation:(AsyncHttpOperation*)pOperation completedWithStatus:(AsyncStatus)status {
+    StrongId<NSAutoreleasePool> scopedPool;
+    scopedPool.attach([NSAutoreleasePool new]);
+
     if (status == AsyncStatus::Canceled) {
         return S_OK;
     }
